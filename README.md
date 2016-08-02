@@ -6,11 +6,11 @@ TBD
 
 The REST API is thought to run in a [maven](https://hub.docker.com/_/maven/) container. To set up the application please proceed as follows:
 
-(a) Download the repository. (In the following we will assume to have downloaded it in $PWD/thoughts-api) 
+(a) Download the repository. (In the following we will assume to have downloaded it in _$PWD/thoughts-api_) 
 
 (b) Run a maven container (in interactive mode, by also indicating the host's port where to map the container's port 8080)
 ```
-docker run -it "$PWD/thoughts-api":/thoughts-api -p 8282:8080 maven /bin/bash
+docker run -it -v "$PWD/thoughts-api":/thoughts-api -p 8282:8080 maven /bin/bash
 ```
 
 (c) Install the application in the container.
@@ -32,4 +32,4 @@ thoughts-api/scripts/configure.sh 172.17.0.1 27017 thoughtsSharing thoughts
 thoughts-api/scripts/start.sh
 ```
 
-If you wish to stop and/or uninstall the application from the container, please use the corresponding scripts.
+Note: If you wish to stop and/or uninstall the application from the container, please use the corresponding scripts.
