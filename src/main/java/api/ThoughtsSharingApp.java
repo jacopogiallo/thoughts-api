@@ -1,6 +1,12 @@
 package api;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+
 import org.bson.Document;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -23,10 +29,17 @@ public class ThoughtsSharingApp extends Application<ThoughtsSharingConfiguration
 		// Get the database managing thoughts
 		MongoDatabase thoughtsDb  = mongoClient.getDatabase(conf.getDbName());
 		// Create and get the collection of thoughts
-		// seems to be not needed thoughtsDb.createCollection(conf.getCollectionName());
 		MongoCollection<Document> thoughtsCollection = thoughtsDb.getCollection(conf.getCollectionName());
 		
-		final ThoughtsSharingAPI api = new ThoughtsSharingAPI(thoughtsCollection);
+		// Allow "Cross-Origin"
+		final FilterRegistration.Dynamic cors = env.servlets().addFilter("CORS", CrossOriginFilter.class);
+		cors.setInitParameter("allowedOrigins", "*");
+		cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        
+        // Register and offer api
+        final ThoughtsSharingAPI api = new ThoughtsSharingAPI(thoughtsCollection);
 		env.jersey().register(api);;
 
 	}
