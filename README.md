@@ -8,7 +8,7 @@ The REST API is thought to run in a [maven](https://hub.docker.com/_/maven/) con
 
 (a) Download the repository. (In the following we will assume to have downloaded it in _$PWD/thoughts-api_) 
 
-(b) Run a maven container (in interactive mode, by also indicating the host's port where to map the container's port 8080)
+(b) Run a maven container. The container should be run in _interactive mode_, by specifying the volume where to retrieve the API sources (e.g., _$PWD/thoughts-api_, which has to be mapped to _/thoughts-api_) and the host's port where to map the container's port 8080 (e.g., 8282).
 ```
 docker run -it -v "$PWD/thoughts-api":/thoughts-api -p 8282:8080 maven /bin/bash
 ```
