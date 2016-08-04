@@ -1,4 +1,4 @@
-dbURL: "172.17.0.1"
+dbURL: "unknown"
 dbPort: "27017"
 dbName: "thoughtsSharing"
 collectionName: "thoughts"
